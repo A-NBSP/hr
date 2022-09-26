@@ -18,7 +18,11 @@ const store = new Vuex.Store({
     key: 'USER_TOKEN',
     reducer(state) {
       const token = state.user.token
-      return { token }
+      return {
+        user: {
+          token: token
+        }
+      }
     }
   })]
 })
