@@ -1,8 +1,15 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-
+import approvalsRouter from '@/router/modules/approvals'
+import attendances from '@/router/modules/attendances'
+import departments from '@/router/modules/departments'
+import employees from '@/router/modules/employees'
+import permission from '@/router/modules/permission'
+import salarys from '@/router/modules/salarys'
+import setting from '@/router/modules/setting'
+import social from '@/router/modules/social'
 Vue.use(Router)
-
+const asyncRouters = [approvalsRouter, attendances, departments, employees, permission, salarys, setting, social]
 /* Layout */
 import Layout from '@/layout'
 
@@ -51,7 +58,7 @@ export const constantRoutes = [
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: 'dashboard' }
+      meta: { title: '首页', icon: 'dashboard' }
     }]
   },
   // 404 page must be placed at the end !!!
@@ -61,7 +68,7 @@ export const constantRoutes = [
 const createRouter = () => new Router({
   // mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),
-  routes: constantRoutes
+  routes: [...constantRoutes, ...asyncRouters]
 })
 
 const router = createRouter()
