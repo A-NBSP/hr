@@ -15,15 +15,7 @@ const store = new Vuex.Store({
   },
   getters,
   plugins: [createPersistedState({
-    key: 'USER_TOKEN',
-    reducer(state) {
-      const token = state.user.token
-      return {
-        user: {
-          token: token
-        }
-      }
-    }
+    paths: ['user.token', 'user.Timestamp']
   })]
 })
 

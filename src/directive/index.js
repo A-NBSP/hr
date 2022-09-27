@@ -3,7 +3,7 @@ export const imgerror = {
     console.log(el)
     console.log(binding)
     console.log(vnode)
-    el.error = function() {
+    el.onerror = function() {
       el.src = binding.value
     }
   }
