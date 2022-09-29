@@ -3,7 +3,7 @@
     <el-card>
       <el-tabs v-model="activeName">
         <!-- 放置页签 -->
-        <el-tab-pane label="角色管理" name="first">
+        <el-tab-pane label="角色管理1111" name="first">
           <!-- 新增角色按钮 -->
           <el-row :gutter="10">
             <el-button icon="el-icon-plus" size="small" type="primary" style="margin-left:10px;" @click="dialogvisible = true">新增角色</el-button>
