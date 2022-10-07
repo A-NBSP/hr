@@ -26,6 +26,7 @@
 </template>
 
 <script>
+import { delDepartments } from '@/api/departments'
 export default {
   name: 'Treetool',
   props: {
@@ -48,8 +49,17 @@ export default {
         this.$emit('addDept', this.treeNode)
       } else if (type === 'edit') {
         // 编辑
+        this.$emit('editDept', this.treeNode)
       } else {
         // del
+        this.$confirm('是否确认删除该部门', '提示', {
+          type: 'warning'
+        }).then(res => {
+          return delDepartments(this.treeNode.id)
+        }).then(res => {
+          this.$message.success('删除成功')
+          this.$emit('randerList')
+        })
       }
     }
   }

@@ -1,5 +1,5 @@
 <template>
-  <div class="departments-container">
+  <div v-loading="loading" class="departments-container">
     <el-card>
       <tree-tools
         :tree-node="company"
@@ -12,9 +12,11 @@
         slot-scope="{ data }"
         :tree-node="data"
         @addDept="handleAddDept"
+        @editDept="editDept"
+        @randerList="getDepartments"
       />
     </el-tree>
-    <add-dept :show-dialog.sync="showDialog" :tree-node="currentNode" />
+    <add-dept ref="addDept" :show-dialog.sync="showDialog" :tree-node="currentNode" />
   </div>
 </template>
 
@@ -35,7 +37,8 @@ export default {
         label: 'name'
       },
       showDialog: false,
-      currentNode: {}
+      currentNode: {},
+      loading: false
     }
   },
   mounted() {
@@ -44,14 +47,24 @@ export default {
 
   methods: {
     async getDepartments() {
-      const result = await getDepartments()
-      this.company = { name: result.companyName, manager: result.companyManage, id: '' }
-      // this.departs = result.depts // 需要将其转化成树形结构
-      this.departs = tranListToTreeData(result.depts, '')
+      try {
+        this.loading = true
+        const result = await getDepartments()
+        this.company = { name: result.companyName, manager: result.companyManage, id: '' }
+        // this.departs = result.depts // 需要将其转化成树形结构
+        this.departs = tranListToTreeData(result.depts, '')
+      } finally {
+        this.loading = false
+      }
     },
     handleAddDept(node) {
       this.showDialog = true
       this.currentNode = node
+    },
+    editDept(node) {
+      this.showDialog = true
+      this.currentNode = node
+      this.$refs.addDept.formData = node
     }
   }
 }
