@@ -14,11 +14,14 @@ import router from './router'
 
 import '@/icons' // icon
 import '@/permission' // permission control
+
+import components from './components'
+Vue.use(components)
 // import { imgerror } from '@/directive'
-import * as directives from '@/directive'
-Object.keys(directives).forEach(ele => {
-  Vue.directive(ele, directives[ele])
-})
+// import * as directives from '@/directive'
+// Object.keys(directives).forEach(ele => {
+//   Vue.directive(ele, directives[ele])
+// })
 // Vue.directive('imgerror', imgerror)
 /**
  * If you don't want to use mock-server
