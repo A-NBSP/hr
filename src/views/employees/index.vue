@@ -36,7 +36,7 @@
         </el-table-column>
         <el-table-column label="操作" fixed="right" width="280">
           <template slot-scope="{row}">
-            <el-button type="text" size="small">查看</el-button>
+            <el-button type="text" size="small" @click="goDetail(row)">查看</el-button>
             <el-button type="text" size="small">转正</el-button>
             <el-button type="text" size="small">调岗</el-button>
             <el-button type="text" size="small">离职</el-button>
@@ -155,6 +155,10 @@ export default {
         autoWidth: true, // 非必填
         bookType: 'xlsx' // 非必填，导出的文件类型
       })
+    },
+    // 查看
+    goDetail(row) {
+      this.$router.push('/employees/detail/' + row.id)
     }
   }
 }

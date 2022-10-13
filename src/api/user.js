@@ -15,3 +15,15 @@ export function getUserDetilById(id) {
     url: `/sys/user/${id}`
   })
 }
+/**
+ * 保存用户信息
+ * @param {Object} data {}
+ * @returns promise
+ */
+export function saveUserDetilById(data) {
+  return request({
+    url: `/sys/user/${data.id}`,
+    method: 'put',
+    data
+  })
+}

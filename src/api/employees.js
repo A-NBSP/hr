@@ -47,3 +47,43 @@ export function importEmployee(data) {
     data
   })
 }
+/** *
+ *  读取用户详情的基础信息
+ * **/
+export function getPersonalDetail(id) {
+  return request({
+    url: `/employees/${id}/personalInfo`
+  })
+}
+/** *
+ *  保存用户详情的基础信息
+ * **/
+export function savePersonalDetail(data) {
+  return request({
+    url: `/employees/${data.userId}/personalInfo`,
+    method: 'put',
+    data
+  })
+}
+/**
+ * 获取岗位信息
+ * @param {String} id 员工id
+ * @returns promise
+ */
+export function getEmployeesJobInfo(id) {
+  return request({
+    url: `/employees/${id}/jobs`
+  })
+}
+/**
+ * 保存岗位信息
+ * @param {String} data 员工信息
+ * @returns promise
+ */
+export function saveEmployeesJobInfo(data) {
+  return request({
+    url: `/employees/${data.userId}/jobs`,
+    method: 'put',
+    data
+  })
+}
