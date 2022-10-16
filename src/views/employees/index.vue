@@ -15,6 +15,12 @@
       <el-table v-loading="loading" border :data="list">
         <el-table-column label="序号" sortable="" width="80" type="index" />
         <el-table-column label="姓名" prop="username" />
+        <el-table-column label="头像">
+          <template slot-scope="{row}">
+            <img style="width: 100px; height: 100px;" :src="row.staffPhoto" alt="" @click="genQrCode(row.staffPhoto)">
+            <!-- <el-avatar :size="50" :src="row.staffPhoto" @click="genQrCode" /> -->
+          </template>
+        </el-table-column>
         <el-table-column label="工号" prop="workNumber" />
         <el-table-column label="聘用形式" prop="formOfEmployment" :formatter="formatterFn">
           <!-- <template slot-scope="{row}">
@@ -59,6 +65,13 @@
       </el-row>
     </el-card>
     <add-employee :dis-visible.sync="disVisible" />
+    <el-dialog
+      title="图片二维码"
+      :visible.sync="dialogVisibleCode"
+      width="30%"
+    >
+      <canvas ref="canvas" />
+    </el-dialog>
   </div>
 </template>
 
@@ -67,6 +80,7 @@ import { getEmployeeList, delEmployee } from '@/api/employees'
 import PageTools from '@/components/PageTools/index.vue'
 import EmployeeEnum from '@/api/constant/employees'
 import AddEmployee from './components/add-employee.vue'
+import QRCode from 'qrcode'
 export default {
   name: 'HrsaasIndex',
   components: { PageTools, AddEmployee },
@@ -77,6 +91,7 @@ export default {
         page: 1, // 当前页码
         size: 10
       },
+      dialogVisibleCode: false,
       list: [],
       total: 0,
       loading: false,
@@ -159,6 +174,17 @@ export default {
     // 查看
     goDetail(row) {
       this.$router.push('/employees/detail/' + row.id)
+    },
+    genQrCode(staffPhoto) {
+      if (!staffPhoto) return this.$message.error('暂无头像')
+      this.dialogVisibleCode = true
+      // 方法等视图更新后触发，获取最新的视图
+      this.$nextTick(() => {
+        QRCode.toCanvas(this.$refs.canvas, staffPhoto, function(error) {
+          if (error) console.error(error)
+          console.log('success!')
+        })
+      })
     }
   }
 }
